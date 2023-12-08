@@ -7,14 +7,38 @@
 #include <stdlib.h>
 #include <string.h>
 #include <openssl/rsa.h>
+#include <openssl/pem.h>
 #include <openssl/err.h>
 
 
 void genKeyPair(RSA *keypair){
-	keypair = RSA_generate_key(2048, 3, NULL, NULL);
-	
-}
+	keypair = RSA_generate_key(2048, 65537, NULL, NULL);
+	BIO *pri = BIO_new(BIO_s_mem());
+	BIO *pub = BIO_new(BIO_s_mem());
 
+	PEM_write_bio_RSAPrivateKey(pri, keypair, NULL, NULL, 0, NULL, NULL);
+	PEM_write_bio_RSAPublicKey(pub, keypair);
+
+	size_t pri_len = BIO_pending(pri);
+	size_t pub_len = BIO_pending(pub);
+	
+	char *pri_key = malloc(pri_len +1);
+	char *pub_key = malloc(pub_len +1);
+
+	BIO_read(pri, pri_key, pri_len);
+	BIO_read(pub, pub_key, pub_len);
+
+	pri_key[pri_len] = '\0';
+	pub_key[pub_len] = '\0';
+	printf("\n%s\n%s\n", pri_key, pub_key);
+	
+	RSA_free(keypair);
+	BIO_free_all(pub);
+	BIO_free_all(pri);
+	free(pri_key);
+	free(pub_key);
+}
+/*
 void encryptMsg(RSA *keypair){
 	char *msg[2048/8];
 	printf("Message to encrypt : ");
@@ -45,12 +69,16 @@ void decryptMsg(RSA *keypair){
 		printf("Decrypted message : %s\n", decrypt);
 	}
 }
-
+*/
 
 int main(void){
 
-	RSA *keypair;
+	RSA *keypair = NULL;
 	genKeyPair(keypair);
+
+	//encryptMsg(keypair);
+
+	//decryptMsg(keypair);
 
 
 
