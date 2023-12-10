@@ -10,8 +10,10 @@
 #include <openssl/pem.h>
 #include <openssl/err.h>
 
-void genKeyPair(RSA *keypair){
-	keypair = RSA_generate_key(2048, 65537, NULL, NULL);
+char *genKeyPair(RSA *keypair){
+
+	keypair = RSA_generate_key(2048, 3, NULL, NULL);
+
 	BIO *pri = BIO_new(BIO_s_mem());
 	BIO *pub = BIO_new(BIO_s_mem());
 
@@ -31,15 +33,20 @@ void genKeyPair(RSA *keypair){
 	pub_key[pub_len] = '\0';
 	printf("\n%s\n%s\n", pri_key, pub_key);
 
+
+	return pub_key;
 }
 
 
-void encryptMsg(RSA *keypair){
-	char *msg[2048/8];
+void encryptMsg(char chPublicKey[]){
+	printf("%s\n", chPublicKey);
+	char msg[2048/8];
+	BIO *bio = BIO_new_mem_buf(chPublicKey, -1);
+	RSA *keypair = PEM_read_bio_RSA_PUBKEY(bio, NULL, NULL, NULL);
+
 	printf("Message to encrypt : ");
 	fgets(msg, 2048/8, stdin);
 	msg[strlen(msg)-1] = '\0';
-
 
 	char *encrypt = malloc(RSA_size(keypair));
 	int encrypt_len;
@@ -53,7 +60,7 @@ void encryptMsg(RSA *keypair){
 
 void decryptMsg(RSA *keypair){
 	char *encrypt = malloc(RSA_size(keypair));
-	int encrypt_len;
+	int encrypt_len = 0;
 	char *err = malloc(130);
 	char *decrypt = malloc(RSA_size(keypair));
 	if(RSA_private_decrypt(encrypt_len, (unsigned char *)encrypt, (unsigned char *)decrypt, keypair, RSA_PKCS1_OAEP_PADDING) == -1){
@@ -68,10 +75,11 @@ void decryptMsg(RSA *keypair){
 
 int main(void){
 
-	RSA *keypair = NULL;
-	genKeyPair(keypair);
+	RSA *keypair;
+	char *pub_key;
+	pub_key = genKeyPair(keypair);
 
-	//encryptMsg(keypair);
+	encryptMsg(pub_key);
 
 	//decryptMsg(keypair);
 
