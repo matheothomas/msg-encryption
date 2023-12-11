@@ -20,6 +20,32 @@ typedef struct priKey {
 
 /* Functions definitions */
 
+bool isPrime(int n);
+
+
+int genPrime();
+
+
+long long gcd(long long a, long long b);
+
+
+long long extEuclid(long long a, long long b);
+
+
+void genKeys(pubKey *pub, priKey *pri);
+
+
+long long modMult(long long a, long long b, long long mod);
+
+
+long long rsaModExp(long long b, long long e, long long m);
+
+
+long long *encrypt(char *msg, unsigned long msgSize, pubKey *pub);
+
+
+char *decrypt(long long *msg, unsigned long msgSize, priKey *pri);
+
 
 #endif
 

@@ -200,6 +200,8 @@ int main(void){
 
 
 
+	free(pub);
+	free(pri);
 	return 0;
 }
 
