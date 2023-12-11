@@ -11,3 +11,4 @@ This is a project made in C to try and understand the basics of asymmetric encry
 ## Disclaimer
 This code should not be used for security purposes and is only made to demonstrate how asymmetric encryption works.
 
+The mathematic implementation of the RSA algorithm was inspired from [this repository](https://github.com/andrewkiluk/RSA-Library).
