@@ -27,11 +27,72 @@ int main(int argc, char *argv[]){
 
 	if(argc >= 2){
 		if(strcmp(argv[1], "server") == 0){
+			pubKey *pub = (pubKey *)malloc(sizeof(pubKey));
+			priKey *pri = (priKey *)malloc(sizeof(priKey));
+			genKeys(pub, pri);
+			printf("Server keys : %lld\n              %lld\n              %lld\n              %lld\n\n", pub->mod, pub->exp, pri->mod, pri->exp);
+
 			netParams p = mainNetworkServ();
+
+			/* Server side */
+
+			char buffer[1024];
+			char *s = (char *)malloc(255*sizeof(char));
+			snprintf(s, 255, "%lld", pub->mod);
+
+			send(p.new_socket, s, strlen(s), 0);
+			p.valread = read(p.new_socket, buffer, 1024-1);
+			printf("%s\n", buffer);
+
+
+			/*
+			printf("Enter message : ");
+			scanf("%s", s);
+			s[strlen(s)] = '\n';
+
+			send(p.new_socket, s, strlen(s), 0);
+			printf("Enter message : ");
+			scanf("%s", s);
+			send(p.new_socket, s, strlen(s), 0);
+
+			p.valread = read(p.new_socket, buffer, 1024-1);
+
+			printf("%s\n", buffer);
+			*/ 
+
+
+
 		} else if(strcmp(argv[1], "client") == 0){
 			if(argc >= 3){
 				char *IPADDR = argv[2];
+				pubKey *pub = (pubKey *)malloc(sizeof(pubKey));
+				priKey *pri = (priKey *)malloc(sizeof(priKey));
+				genKeys(pub, pri);
+				printf("Client keys : %lld\n              %lld\n              %lld\n              %lld\n\n", pub->mod, pub->exp, pri->mod, pri->exp);
+
 				netParams p = mainNetworkClient(IPADDR);
+
+				/* Client side */
+
+				char buffer[1024];
+				char *s = (char *)malloc(255*sizeof(char));
+				snprintf(s, 255, "%lld", pub->mod);
+
+				send(p.client_fd, s, strlen(s), 0);
+				p.valread = read(p.client_fd, buffer, 1024-1);
+				printf("%s\n", buffer);
+
+
+				/*
+				printf("Enter message : ");
+				scanf("%s", s);
+				send(p.client_fd, s, strlen(s), 0);
+				p.valread = read(p.client_fd, buffer, 1024-1);
+
+				printf("%s\n", buffer);
+				*/
+
+
 			} else {
 				fprintf(stderr, "Not enough parameters.\n");
 			}
