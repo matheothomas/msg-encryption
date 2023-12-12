@@ -41,10 +41,10 @@ long long modMult(long long a, long long b, long long mod);
 long long rsaModExp(long long b, long long e, long long m);
 
 
-long long *encrypt(char *msg, unsigned long msgSize, pubKey *pub);
+long long *rsaEncrypt(char *msg, unsigned long msgSize, pubKey *pub);
 
 
-char *decrypt(long long *msg, unsigned long msgSize, priKey *pri);
+char *rsaDecrypt(long long *msg, unsigned long msgSize, priKey *pri);
 
 
 #endif

@@ -132,7 +132,7 @@ long long rsaModExp(long long b, long long e, long long m){
 }
 
 
-long long *encrypt(char *msg, unsigned long msgSize, pubKey *pub){
+long long *rsaEncrypt(char *msg, unsigned long msgSize, pubKey *pub){
 	long long *encrypted = malloc(sizeof(long long)*msgSize);
 	if(encrypted == NULL){
 		fprintf(stderr, "malloc failed\n");
@@ -148,7 +148,7 @@ long long *encrypt(char *msg, unsigned long msgSize, pubKey *pub){
 }
 
 
-char *decrypt(long long *msg, unsigned long msgSize, priKey *pri){
+char *rsaDecrypt(long long *msg, unsigned long msgSize, priKey *pri){
 	if(msgSize % sizeof(long long) != 0){
 		fprintf(stderr, "error\n");
 		return NULL;
