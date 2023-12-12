@@ -8,8 +8,9 @@ This is a project made in C to try and understand the basics of asymmetric encry
 - [ ] Create a program to bruteforce the keys.
 
 ## Principle
-For each user, a private and a public key is generated using the RSA principle. The public key is shared with the other user, and will use it to encrypt every message sent.
-The other user will be able to decrypt the message encrypted with its public key using the associated private key.
+For each user, a **private** and a **public** key is generated using the RSA principle. 
+- The public key is shared with the other user, and will use it to encrypt every message sent.
+- The other user will be able to decrypt the message encrypted with its public key using the associated private key.
 
 
 ## Disclaimer
