@@ -34,31 +34,43 @@ int main(int argc, char *argv[]){
 
 			netParams p = mainNetworkServ();
 
-			/* Server side */
-
-			char buffer[1024];
+			sleep(1);
+			/* Public key exchange */
+			char buffer[1024] = { 0 };
 			char *s = (char *)malloc(255*sizeof(char));
 			snprintf(s, 255, "%lld", pub->mod);
 
 			send(p.new_socket, s, strlen(s), 0);
 			p.valread = read(p.new_socket, buffer, 1024-1);
-			printf("%s\n", buffer);
+			//printf("buffer : %s\n", buffer);
+			char *ptr;
+			long long res = strtol(buffer, &ptr, 10);
+			printf("res : %lld\n", res);
+			sleep(1);
 
+			fflush(stdin);
+			fflush(stdout);
 
-			/*
+			/* Message exchange */
+			char s1[255];
 			printf("Enter message : ");
-			scanf("%s", s);
-			s[strlen(s)] = '\n';
+			scanf("%s", s1);
+			//s[strlen(s)] = '\n';
+			printf("s1 : %s\n", s1);
+			sleep(1);
 
-			send(p.new_socket, s, strlen(s), 0);
-			printf("Enter message : ");
-			scanf("%s", s);
-			send(p.new_socket, s, strlen(s), 0);
+			char *toSend = (char *)malloc(255*sizeof(char));
+			snprintf(toSend, 255, "%s", s1);
+			printf("toSend : %s\n", toSend);
+			sleep(1);
+			memset(buffer, 0, sizeof(buffer));
+
+			send(p.new_socket, toSend, strlen(toSend), 0);
+			sleep(1);
 
 			p.valread = read(p.new_socket, buffer, 1024-1);
 
-			printf("%s\n", buffer);
-			*/ 
+			printf("buffer : %s\n", buffer);
 
 
 
@@ -72,25 +84,53 @@ int main(int argc, char *argv[]){
 
 				netParams p = mainNetworkClient(IPADDR);
 
-				/* Client side */
-
+				sleep(1);
+				/* public key exchange */
 				char buffer[1024];
 				char *s = (char *)malloc(255*sizeof(char));
 				snprintf(s, 255, "%lld", pub->mod);
 
 				send(p.client_fd, s, strlen(s), 0);
 				p.valread = read(p.client_fd, buffer, 1024-1);
-				printf("%s\n", buffer);
+				//printf("buffer : %s\n", buffer);
+				char *ptr;
+				long long res = strtol(buffer, &ptr, 10);
+				printf("res : %lld\n", res);
+				sleep(1);
 
+				fflush(stdin);
+				fflush(stdout);
+
+				/* Message exchange */
+				char s1[255];
+				printf("Enter message : ");
+				scanf("%s", s1);
+				//s[strlen(s)] = '\n';
+				printf("s1 : %s\n", s1);
+				fflush(stdin);
+				sleep(1);
+
+				char *toSend = (char *)malloc(255*sizeof(char));
+				snprintf(toSend, 255, "%s", s1);
+				printf("toSend : %s\n", toSend);
+				sleep(1);
+				memset(buffer, 0, sizeof(buffer));
+
+				send(p.new_socket, toSend, strlen(toSend), 0);
+				sleep(1);
+
+				p.valread = read(p.new_socket, buffer, 1024-1);
+
+				printf("buffer : %s\n", buffer);
 
 				/*
-				printf("Enter message : ");
-				scanf("%s", s);
-				send(p.client_fd, s, strlen(s), 0);
-				p.valread = read(p.client_fd, buffer, 1024-1);
+				   printf("Enter message : ");
+				   scanf("%s", s);
+				   send(p.client_fd, s, strlen(s), 0);
+				   p.valread = read(p.client_fd, buffer, 1024-1);
 
-				printf("%s\n", buffer);
-				*/
+				   printf("%s\n", buffer);
+				   */
 
 
 			} else {
