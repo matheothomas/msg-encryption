@@ -1,5 +1,7 @@
 # msg-encryption
 
+## WORK IN PROGRESS
+
 This is a project made in C to try and understand the basics of asymmetric encryption.
 
 ## Roadmap
@@ -20,13 +22,14 @@ This code should not be used for **security purposes** and is only made to demon
 Clone the repository and compile the code with :
 ```bash
 git clone https://github.com/matheothomas/msg-encryption
-cd msg-encryption/src
+cd msg-encryption
+make dir
 make
 ```
 
 Execute the program with
 ```bash
-./main
+./bin/main
 ```
 
 ### Credits
