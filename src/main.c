@@ -18,8 +18,8 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#include "rsa.h"
-#include "network.h"
+#include "../include/rsa.h"
+#include "../include/network.h"
 
 
 

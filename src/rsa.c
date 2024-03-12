@@ -11,7 +11,7 @@
 #include <math.h>
 #include <complex.h>
 #include <time.h>
-#include "rsa.h"
+#include "../include/rsa.h"
 
 
 bool isPrime(int n){

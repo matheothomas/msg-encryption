@@ -10,7 +10,7 @@
 #include<string.h>
 #include<sys/socket.h>
 #include<unistd.h>
-#include"network.h"
+#include"../include/network.h"
 
 #define PORT 8080
 
